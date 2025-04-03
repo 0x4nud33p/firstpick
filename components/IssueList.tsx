@@ -1,12 +1,28 @@
+"use client";
 
+import { useEffect, useState } from "react";
+import { getIssues } from "@/mockata/data";
 import IssueCard, { Issue } from "./IssueCard";
 
-interface IssueListProps {
-  issues: Issue[];
-  isLoading?: boolean;
-}
+const IssueList = () => {
+  const [issues, setIssues] = useState<Issue[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const IssueList = ({ issues, isLoading }: IssueListProps) => {
+  useEffect(() => {
+    const fetchInitialIssues = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getIssues();
+        setIssues(data);
+      } catch (error) {
+        console.error("Failed to fetch issues:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchInitialIssues();
+  },[])
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
