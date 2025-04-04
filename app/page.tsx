@@ -33,7 +33,7 @@ export default function Home() {
           <div className="md:col-span-1">
             <FilterPanel />
           </div>
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 overflow-auto max-h-[850px] scrollbar-hide">
             <IssueList />
           </div>
         </div>
