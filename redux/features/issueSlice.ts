@@ -1,22 +1,42 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
+import { IssueState, Filters } from '@/types';
+
+const initialState: IssueState = {
+  filters: {
+    language: [],
+    tag: [],
+    difficulty: [],
+  },
+  issues: [],
+  status: 'idle',
+};
 
 export const fetchIssues = createAsyncThunk(
   'issues/fetchIssues',
   async (_, { getState }) => {
-    const state = getState() as { issues: { filters: { language: string; tag: string; difficulty: string } } };
+    const state = getState() as RootState;
     const { language, tag, difficulty } = state.issues.filters;
+
     let query = `q=label:"good first issue"+state:open+is:issue`;
 
-    if (language) query += `+language:${language}`;
-    if (tag) query += `+label:${tag}`;
-    if (difficulty) query += `+label:${difficulty}`;
+    if (language.length) {
+      query += language.map((lang) => `+language:${lang}`).join('');
+    }
+    if (tag.length) {
+      query += tag.map((t) => `+label:${t}`).join('');
+    }
+    if (difficulty.length) {
+      query += difficulty.map((d) => `+label:${d}`).join('');
+    }
 
     const res = await fetch(`https://api.github.com/search/issues?${query}`, {
       headers: {
         Accept: 'application/vnd.github+json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
       },
     });
+
     const data = await res.json();
     return data;
   }
@@ -24,18 +44,24 @@ export const fetchIssues = createAsyncThunk(
 
 const issuesSlice = createSlice({
   name: 'issues',
-  initialState: {
-    filters: {
-      language: '',
-      tag: '',
-      difficulty: '',
-    },
-    issues: [],
-    status: 'idle',
-  },
+  initialState,
   reducers: {
-    setFilter: (state, action) => {
-      state.filters = { ...state.filters, ...action.payload };
+    setFilter: (state, action: PayloadAction<{ [key in keyof Filters]?: string }>) => {
+      const [key, value] = Object.entries(action.payload)[0] as [keyof Filters, string];
+      const current = state.filters[key];
+
+      if (current.includes(value)) {
+        state.filters[key] = current.filter((v) => v !== value);
+      } else {
+        state.filters[key] = [...current, value];
+      }
+    },
+    resetFilters: (state) => {
+      state.filters = {
+        language: [],
+        tag: [],
+        difficulty: [],
+      };
     },
   },
   extraReducers: (builder) => {
@@ -53,5 +79,5 @@ const issuesSlice = createSlice({
   },
 });
 
-export const { setFilter } = issuesSlice.actions;
+export const { setFilter, resetFilters } = issuesSlice.actions;
 export default issuesSlice.reducer;

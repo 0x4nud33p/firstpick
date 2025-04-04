@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { filterCategories } from "@/types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
-import { setFilter, fetchIssues } from "@/redux/features/issueSlice";
+import { setFilter, fetchIssues, resetFilters } from "@/redux/features/issueSlice";
 
 const FilterPanel = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,7 +21,15 @@ const FilterPanel = () => {
     <div className="w-full bg-card rounded-lg border p-4 shadow-sm">
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-medium">Filters</h3>
-        <Button variant="ghost" size="sm" className="text-xs">
+        <Button 
+        variant="ghost" 
+        size="sm" 
+        className="text-xs"
+        onClick={() => {
+        dispatch(resetFilters());
+        dispatch(fetchIssues());
+        }}
+        >
           Reset All
         </Button>
       </div>

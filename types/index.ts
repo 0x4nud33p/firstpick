@@ -10,6 +10,18 @@ export interface FilterCategory {
   options: FilterOption[];
 }
 
+export interface Filters {
+  language: string[];
+  tag: string[];
+  difficulty: string[];
+}
+
+export interface IssueState {
+  filters: Filters;
+  issues: any[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+}
+
 export const languageOptions: FilterOption[] = [
   { id: "javascript", label: "JavaScript", count: 138 },
   { id: "typescript", label: "TypeScript", count: 97 },
