@@ -3,7 +3,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
-import { handleSearch } from "@/lib/client_data_fetching/search";
 import { useState } from "react";
 
 const SearchBar = () => {
@@ -14,6 +13,10 @@ const SearchBar = () => {
     const query = formData.get("search") as string;
     setSearchQuery(query);
   };
+  
+  function handleSearch(query: string){
+    console.log(query);
+  }
 
   return (
     <form onSubmit={handleSubmit} className="relative w-full max-w-2xl mx-auto">
