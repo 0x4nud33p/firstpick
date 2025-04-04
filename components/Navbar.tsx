@@ -52,11 +52,14 @@ const Navbar = () => {
             )}
           </Button>
 
-          <a href="https://github.com/0x4nud33p/firstpick" target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" size="icon">
-              <GithubIcon className="h-5 w-5" />
-            </Button>
-          </a>
+          <a
+          href="https://github.com/0x4nud33p/firstpick"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center h-10 w-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition"
+        >
+          <GithubIcon className="h-5 w-5" />
+        </a>
         </div>
       </div>
     </header>
