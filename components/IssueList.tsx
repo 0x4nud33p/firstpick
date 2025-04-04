@@ -13,7 +13,7 @@ const IssueList = () => {
   useEffect(() => {
     dispatch(fetchIssues());
   }, [dispatch]);
-  console.log("issues from issueitems",issues);
+  
   if (status === "loading" || status === "idle") {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

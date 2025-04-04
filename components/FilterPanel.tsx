@@ -1,3 +1,4 @@
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -8,49 +9,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-
-interface FilterOption {
-  id: string;
-  label: string;
-  count?: number;
-}
-
-interface FilterCategory {
-  id: string;
-  title: string;
-  options: FilterOption[];
-}
-
-const languageOptions: FilterOption[] = [
-  { id: "javascript", label: "JavaScript", count: 138 },
-  { id: "typescript", label: "TypeScript", count: 97 },
-  { id: "python", label: "Python", count: 85 },
-  { id: "java", label: "Java", count: 42 },
-  { id: "go", label: "Go", count: 37 },
-  { id: "rust", label: "Rust", count: 29 },
-];
-
-const tagOptions: FilterOption[] = [
-  { id: "good-first-issue", label: "Good First Issue", count: 214 },
-  { id: "help-wanted", label: "Help Wanted", count: 142 },
-  { id: "documentation", label: "Documentation", count: 86 },
-  { id: "bug", label: "Bug", count: 73 },
-  { id: "enhancement", label: "Enhancement", count: 54 },
-];
-
-const difficultyOptions: FilterOption[] = [
-  { id: "beginner", label: "Beginner", count: 187 },
-  { id: "intermediate", label: "Intermediate", count: 96 },
-  { id: "advanced", label: "Advanced", count: 42 },
-];
-
-const filterCategories: FilterCategory[] = [
-  { id: "languages", title: "Languages", options: languageOptions },
-  { id: "tags", title: "Tags", options: tagOptions },
-  { id: "difficulty", title: "Difficulty", options: difficultyOptions },
-];
+import { filterCategories } from "@/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { setFilter, fetchIssues } from "@/redux/features/issueSlice";
 
 const FilterPanel = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  
   return (
     <div className="w-full bg-card rounded-lg border p-4 shadow-sm">
       <div className="flex justify-between items-center mb-4">
@@ -70,7 +36,13 @@ const FilterPanel = () => {
               <div className="space-y-2 pt-1 pb-2">
                 {category.options.map((option) => (
                   <div key={option.id} className="flex items-center space-x-2">
-                    <Checkbox id={option.id} />
+                    <Checkbox 
+                    id={option.id}
+                    onCheckedChange={() => {
+                      dispatch(setFilter({ [category.id]: option.label }));
+                      dispatch(fetchIssues());
+                    }}
+                    />
                     <label
                       htmlFor={option.id}
                       className="text-sm flex-1 cursor-pointer"
