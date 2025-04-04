@@ -1,13 +1,17 @@
+"use client";
+
 import FilterPanel from "@/components/FilterPanel";
 import Footer from "@/components/Footer";
 import IssueList from "@/components/IssueList";
 import SearchBar from "@/components/SearchBar";
 import Navbar from "@/components/ui/Navbar";
-
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 
 export default function Home() {
   
   return (
+    <Provider store={store}>
     <div className="min-h-screen flex flex-col md:ml-24">
       <Navbar />
       
@@ -37,5 +41,6 @@ export default function Home() {
 
       <Footer />
     </div>
+    </Provider>
   );
 }

@@ -1,29 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getIssues } from "@/mockata/data";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchIssues } from "@/redux/features/issueSlice";
+import type { AppDispatch, RootState } from "@/redux/store";
 import IssueCard, { Issue } from "./IssueCard";
 
 const IssueList = () => {
-  const [issues, setIssues] = useState<Issue[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch<AppDispatch>(); 
+  const { issues, status } = useSelector((state: RootState) => state.issues);
 
   useEffect(() => {
-    const fetchInitialIssues = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getIssues();
-        setIssues(data);
-      } catch (error) {
-        console.error("Failed to fetch issues:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchInitialIssues();
-  },[])
-
-  if (isLoading) {
+    dispatch(fetchIssues());
+  }, [dispatch]);
+  console.log("issues from issueitems",issues);
+  if (status === "loading" || status === "idle") {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {Array(6)
@@ -38,7 +29,7 @@ const IssueList = () => {
     );
   }
 
-  if (issues.length === 0) {
+  if (issues?.length === 0) {
     return (
       <div className="text-center py-16">
         <h3 className="text-lg font-medium">No issues found</h3>
@@ -51,7 +42,7 @@ const IssueList = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {issues.map((issue) => (
+      {issues?.map((issue: Issue) => (
         <IssueCard key={issue.id} issue={issue} />
       ))}
     </div>
