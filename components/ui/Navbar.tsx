@@ -17,7 +17,7 @@ const Navbar = () => {
     <header className="w-full border-b border-border sticky top-0 z-10 bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="font-bold text-xl flex items-center">
+          <div className="font-semibold text-xl flex items-center">
             <div className="ml-6 h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center mr-2">
               FF
             </div>
