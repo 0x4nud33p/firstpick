@@ -20,7 +20,8 @@ export interface IssueState {
   filters: Filters;
   issues: any[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  labels?: {} 
+  labels?: {} ;
+  labelCounts: Record<string, number>;
 }
 
 export let languageOptions: FilterOption[] = [

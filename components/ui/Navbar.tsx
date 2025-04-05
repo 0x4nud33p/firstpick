@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { GithubIcon, FilterIcon, SunIcon, MoonIcon } from "lucide-react";
 import { useTheme } from "next-themes"
+import Logo from "./Logo";
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
@@ -17,12 +18,13 @@ const Navbar = () => {
     <header className="w-full border-b border-border sticky top-0 z-10 bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
+          <Logo />
           <div className="font-semibold text-xl flex items-center">
-            <div className="ml-6 h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center mr-2">
-              FF
-            </div>
-            FirstFix
-          </div>
+          First
+          <span className="text-red-800 font-bold">
+            Fix
+          </span>
+        </div>
         </div>
 
         <div className="flex items-center gap-4">
