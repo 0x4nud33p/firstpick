@@ -10,12 +10,14 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { filterCategories } from "@/types";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
 import { setFilter, fetchIssues, resetFilters } from "@/redux/features/issueSlice";
 
 const FilterPanel = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { filters, labelCounts } = useSelector((state: RootState) => state.issues);
+  
   
   return (
     <div className="w-full bg-card rounded-lg border p-4 shadow-sm">

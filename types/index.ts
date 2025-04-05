@@ -20,29 +20,30 @@ export interface IssueState {
   filters: Filters;
   issues: any[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  labels?: {} 
 }
 
-export const languageOptions: FilterOption[] = [
-  { id: "javascript", label: "JavaScript", count: 138 },
-  { id: "typescript", label: "TypeScript", count: 97 },
-  { id: "python", label: "Python", count: 85 },
-  { id: "java", label: "Java", count: 42 },
-  { id: "go", label: "Go", count: 37 },
-  { id: "rust", label: "Rust", count: 29 },
+export let languageOptions: FilterOption[] = [
+  { id: 'javascript', label: 'JavaScript' },
+  { id: 'typescript', label: 'TypeScript' },
+  { id: 'python', label: 'Python' },
+  { id: 'java', label: 'Java' },
+  { id: 'go', label: 'Go' },
+  { id: 'rust', label: 'Rust' },
 ];
 
 export const tagOptions: FilterOption[] = [
-  { id: "good-first-issue", label: "Good First Issue", count: 214 },
-  { id: "help-wanted", label: "Help Wanted", count: 142 },
-  { id: "documentation", label: "Documentation", count: 86 },
-  { id: "bug", label: "Bug", count: 73 },
-  { id: "enhancement", label: "Enhancement", count: 54 },
+  { id: "good first issue", label: "Good First Issue" },
+  { id: "help wanted", label: "Help Wanted" },
+  { id: "documentation", label: "Documentation"},
+  { id: "bug", label: "Bug"},
+  { id: "enhancement", label: "Enhancement"},
 ];
 
 export const difficultyOptions: FilterOption[] = [
-  { id: "beginner", label: "Beginner", count: 187 },
-  { id: "intermediate", label: "Intermediate", count: 96 },
-  { id: "advanced", label: "Advanced", count: 42 },
+  { id: "beginner", label: "Beginner"},
+  { id: "intermediate", label: "Intermediate"},
+  { id: "advanced", label: "Advanced"},
 ];
 
 export const filterCategories: FilterCategory[] = [

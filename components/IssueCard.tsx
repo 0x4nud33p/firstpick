@@ -30,7 +30,6 @@ interface IssueCardProps {
 }
 
 const IssueCard = ({ issue }: IssueCardProps) => {
-  console.log(issue);
   return (
     <Card className="h-full flex flex-col transition-all duration-200 hover:shadow-md overflow-hidden animate-fade-in">
       <CardHeader className="pb-2">

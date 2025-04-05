@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { IssueState, Filters } from '@/types';
+import { IssueState, Filters, languageOptions } from '@/types';
 
 const initialState: IssueState = {
   filters: {
@@ -9,6 +9,7 @@ const initialState: IssueState = {
     difficulty: [],
   },
   issues: [],
+  labelCounts: {} as Record<string, number>,
   status: 'idle',
 };
 
@@ -38,7 +39,25 @@ export const fetchIssues = createAsyncThunk(
     });
 
     const data = await res.json();
-    return data;
+
+    const labelCounts: Record<string, number> = {};
+    const fetchCounts = languageOptions.map(async (lang) => {
+      const countRes = await fetch(
+        `https://api.github.com/search/issues?q=label:good-first-issue+language:${lang.label}`,
+        {
+          headers: {
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+          }
+        }
+      );
+      const countData = await countRes.json();
+      labelCounts[lang.label] = countData.total_count || 0;
+    });
+
+    await Promise.all(fetchCounts);
+
+    return { issues: data.items, labelCounts };
   }
 );
 
@@ -71,7 +90,8 @@ const issuesSlice = createSlice({
       })
       .addCase(fetchIssues.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.issues = action.payload.items;
+        state.issues = action.payload.issues;
+        state.labelCounts = action.payload.labelCounts;
       })
       .addCase(fetchIssues.rejected, (state) => {
         state.status = 'failed';
