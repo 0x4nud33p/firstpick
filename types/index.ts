@@ -46,7 +46,7 @@ export const difficultyOptions: FilterOption[] = [
 ];
 
 export const filterCategories: FilterCategory[] = [
-  { id: "languages", title: "Languages", options: languageOptions },
-  { id: "tags", title: "Tags", options: tagOptions },
+  { id: "language", title: "Languages", options: languageOptions },
+  { id: "tag", title: "Tags", options: tagOptions },
   { id: "difficulty", title: "Difficulty", options: difficultyOptions },
 ];
