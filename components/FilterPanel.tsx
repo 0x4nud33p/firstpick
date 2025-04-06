@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import { filterCategories } from "@/types";
+import { filterCategories, Filters } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { setFilter, fetchIssues, resetFilters } from "@/redux/features/issueSlice";

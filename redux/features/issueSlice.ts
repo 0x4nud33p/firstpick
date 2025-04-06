@@ -51,6 +51,7 @@ export const fetchIssues = createAsyncThunk(
           }
         }
       );
+      // count responese is giving 422 status code error
       const countData = await countRes.json();
       labelCounts[lang.label] = countData.total_count || 0;
     });
