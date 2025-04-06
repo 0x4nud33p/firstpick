@@ -68,7 +68,7 @@ const issuesSlice = createSlice({
     setFilter: (state, action: PayloadAction<{ [key in keyof Filters]?: string }>) => {
       const [key, value] = Object.entries(action.payload)[0] as [keyof Filters, string];
       const current = state.filters[key];
-
+      console.log("current",current);
       if (current.includes(value)) {
         state.filters[key] = current.filter((v) => v !== value);
       } else {
