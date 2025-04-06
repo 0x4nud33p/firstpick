@@ -51,13 +51,12 @@ export const fetchIssues = createAsyncThunk(
           }
         }
       );
-      // count responese is giving 422 status code error
+      // count responese is giving 422 status code error and always shows the countdata = 0;
       const countData = await countRes.json();
       labelCounts[lang.label] = countData.total_count || 0;
     });
 
     await Promise.all(fetchCounts);
-
     return { issues: data.items, labelCounts };
   }
 );
@@ -69,7 +68,7 @@ const issuesSlice = createSlice({
     setFilter: (state, action: PayloadAction<{ [key in keyof Filters]?: string }>) => {
       const [key, value] = Object.entries(action.payload)[0] as [keyof Filters, string];
       const current = state.filters[key];
-      console.log("current",current);
+
       if (current.includes(value)) {
         state.filters[key] = current.filter((v) => v !== value);
       } else {
