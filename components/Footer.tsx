@@ -38,16 +38,7 @@ const Footer = () => {
             >
               Contribute
             </a>
-
-            <a
-              href="https://github.com/0x4nud33p/firstpick"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-sm hover:text-primary transition-colors"
-            >
-              <GithubIcon className="h-4 w-4" />
-              GitHub
-            </a>
+            <GithubIcon />
           </div>
         </div>
       </div>

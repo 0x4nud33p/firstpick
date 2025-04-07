@@ -34,8 +34,8 @@ export let languageOptions: FilterOption[] = [
 ];
 
 export const tagOptions: FilterOption[] = [
-  { id: "good first issue", label: "good-first-issue" },
-  { id: "help wanted", label: "Help Wanted" },
+  { id: "good-first-issue", label: "Good First Issue" },
+  { id: "help-wanted", label: "Help Wanted" },
   { id: "documentation", label: "Documentation"},
   { id: "bug", label: "Bug"},
   { id: "enhancement", label: "Enhancement"},
