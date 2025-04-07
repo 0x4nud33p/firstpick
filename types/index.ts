@@ -14,6 +14,7 @@ export interface Filters {
   language: string[];
   tag: string[];
   difficulty: string[];
+  // repo?: string;
 }
 
 export interface IssueState {

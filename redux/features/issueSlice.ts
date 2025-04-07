@@ -7,6 +7,7 @@ const initialState: IssueState = {
     language: [],
     tag: [],
     difficulty: [],
+    // repo: ''
   },
   issues: [],
   labelCounts: {} as Record<string, number>,
@@ -31,12 +32,23 @@ export const fetchIssues = createAsyncThunk(
       query += difficulty.map((d) => `+label:${d}`).join('');
     }
 
+//     if (repo){
+//       const repoData = await fetch(`https://api.github.com/search/repositories?q=${repo}
+// `, {
+//       headers: {
+//         Accept: 'application/vnd.github+json',
+//         Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+//       },
+//     });
+//     }
+
     const res = await fetch(`https://api.github.com/search/issues?${query}`, {
       headers: {
         Accept: 'application/vnd.github+json',
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
       },
     });
+
 
     const data = await res.json();
 
@@ -51,7 +63,7 @@ export const fetchIssues = createAsyncThunk(
           }
         }
       );
-      // count responese is giving 422 status code error and always shows the countdata = 0;
+
       const countData = await countRes.json();
       labelCounts[lang.label] = countData.total_count || 0;
     });
