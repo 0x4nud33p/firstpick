@@ -7,10 +7,9 @@ const initialState: IssueState = {
     language: [],
     tag: [],
     difficulty: [],
-    // repo: ''
   },
   issues: [],
-  labelCounts: {} as Record<string, number>,
+  // labelCounts: {} as Record<string, number>,
   status: 'idle',
 };
 
@@ -32,16 +31,6 @@ export const fetchIssues = createAsyncThunk(
       query += difficulty.map((d) => `+label:${d}`).join('');
     }
 
-//     if (repo){
-//       const repoData = await fetch(`https://api.github.com/search/repositories?q=${repo}
-// `, {
-//       headers: {
-//         Accept: 'application/vnd.github+json',
-//         Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-//       },
-//     });
-//     }
-
     const res = await fetch(`https://api.github.com/search/issues?${query}`, {
       headers: {
         Accept: 'application/vnd.github+json',
@@ -52,24 +41,26 @@ export const fetchIssues = createAsyncThunk(
 
     const data = await res.json();
 
-    const labelCounts: Record<string, number> = {};
-    const fetchCounts = languageOptions.map(async (lang) => {
-      const countRes = await fetch(
-        `https://api.github.com/search/issues?q=label:good-first-issue+language:${lang.label}`,
-        {
-          headers: {
-            Accept: 'application/vnd.github+json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-          }
-        }
-      );
+    // const labelCounts: Record<string, number> = {};
+    // const fetchCounts = languageOptions.map(async (lang) => {
+    //   const countRes = await fetch(
+    //     `https://api.github.com/search/issues?q=label:good-first-issue+language:${lang.label}`,
+    //     {
+    //       headers: {
+    //         Accept: 'application/vnd.github+json',
+    //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+    //       }
+    //     }
+    //   );
 
-      const countData = await countRes.json();
-      labelCounts[lang.label] = countData.total_count || 0;
-    });
+    //   const countData = await countRes.json();
+    //   console.log("count data in the store",countData);
+    //   labelCounts[lang.label] = countData.total_count;
+    // });
 
-    await Promise.all(fetchCounts);
-    return { issues: data.items, labelCounts };
+    // await Promise.all(fetchCounts);
+    // return { issues: data.items, labelCounts };
+    return { issues: data.items };
   }
 );
 
@@ -103,7 +94,7 @@ const issuesSlice = createSlice({
       .addCase(fetchIssues.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.issues = action.payload.issues;
-        state.labelCounts = action.payload.labelCounts;
+        // state.labelCounts = action.payload.labelCounts;
       })
       .addCase(fetchIssues.rejected, (state) => {
         state.status = 'failed';

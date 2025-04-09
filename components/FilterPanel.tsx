@@ -16,7 +16,8 @@ import { setFilter, fetchIssues, resetFilters } from "@/redux/features/issueSlic
 
 const FilterPanel = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { filters, labelCounts } = useSelector((state: RootState) => state.issues);
+  // const { filters, labelCounts } = useSelector((state: RootState) => state.issues);
+  const { filters } = useSelector((state: RootState) => state.issues);
 
   return (
     <div className="w-full bg-card rounded-lg border p-4 shadow-sm">
@@ -61,11 +62,11 @@ const FilterPanel = () => {
                       >
                         {option.label}
                       </label>
-                      {
+                      {/* {
                         <Badge variant="secondary" className="text-xs font-normal">
                           {labelCounts[option.id] || 0}
                         </Badge>
-                      }
+                      } */}
                     </div>
                   );
                 })}
