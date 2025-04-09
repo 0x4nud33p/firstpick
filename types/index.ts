@@ -2,6 +2,7 @@ export interface FilterOption {
   id: string;
   label: string;
   count?: number;
+  languagename?:string;
 }
 
 export interface FilterCategory {
@@ -34,11 +35,11 @@ export let languageOptions: FilterOption[] = [
 ];
 
 export const tagOptions: FilterOption[] = [
-  { id: "good-first-issue", label: "Good First Issue" },
-  { id: "help-wanted", label: "Help Wanted" },
-  { id: "documentation", label: "Documentation"},
-  { id: "bug", label: "Bug"},
-  { id: "enhancement", label: "Enhancement"},
+  { id: "good-first-issue", label: "Good First Issue", languagename:"language" },
+  { id: "help-wanted", label: "Help Wanted", languagename:"language"  },
+  { id: "documentation", label: "Documentation", languagename:"language" },
+  { id: "bug", label: "Bug", languagename:"language" },
+  { id: "enhancement", label: "Enhancement", languagename:"language" },
 ];
 
 export const difficultyOptions: FilterOption[] = [

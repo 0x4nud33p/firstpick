@@ -10,9 +10,14 @@ import {
 import { GithubIcon, FilterIcon, SunIcon, MoonIcon } from "lucide-react";
 import { useTheme } from "next-themes"
 import Logo from "./Logo";
+import { fetchIssues, setFilter } from "@/redux/features/issueSlice";
+import { tagOptions } from "@/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <header className="w-full border-b border-border sticky top-0 z-10 bg-background/80 backdrop-blur-md">
@@ -36,18 +41,30 @@ const Navbar = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>All Issues</DropdownMenuItem>
-              <DropdownMenuItem>Good First Issues</DropdownMenuItem>
-              <DropdownMenuItem>Help Wanted</DropdownMenuItem>
-              <DropdownMenuItem>Documentation</DropdownMenuItem>
-              <DropdownMenuItem>Bug Fixes</DropdownMenuItem>
+              {
+                tagOptions.map((tag) => (
+                  <DropdownMenuItem 
+                  key={tag.id}
+                  onClick={() => {
+                    dispatch(setFilter({ [tag.languagename!]: tag.label }));
+                    dispatch(fetchIssues());
+                  }}
+                  >
+                    {tag.label}
+                  </DropdownMenuItem>
+                ))
+              }
             </DropdownMenuContent>
           </DropdownMenu>
 
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={() => {
+              if (!theme) return;
+              setTheme(theme === "dark" ? "light" : "dark");
+            }}
+            aria-label="Toggle theme"
           >
             {theme === "dark" ? (
               <SunIcon className="h-5 w-5" />
