@@ -7,6 +7,7 @@ import SearchBar from "@/components/SearchBar";
 import Navbar from "@/components/ui/Navbar";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
+import { PaginationBar } from "@/components/PaginationBar";
 
 export default function Home() {
   
@@ -37,8 +38,10 @@ export default function Home() {
             <IssueList />
           </div>
         </div>
+        <div className="mt-4">
+          <PaginationBar />
+        </div>
       </main>
-
       <Footer />
     </div>
     </Provider>
